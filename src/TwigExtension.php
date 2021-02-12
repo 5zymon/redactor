@@ -11,6 +11,8 @@ use Webmozart\PathUtil\Path;
 
 class TwigExtension extends AbstractExtension
 {
+    private const LANGUAGE_KEY = 'lang';
+
     /** @var RedactorConfig */
     private $redactorConfig;
 
@@ -59,6 +61,12 @@ class TwigExtension extends AbstractExtension
                 }
                 $output .= "\n";
             }
+        }
+
+        if (in_array(self::LANGUAGE_KEY, $this->redactorConfig->getConfig())) {
+
+            $value = $this->redactorConfig->getConfig()['lang'];
+            $output .= sprintf('<script src="/assets/redactor/langs/%s.js"></script>', $value);
         }
 
         return $output;
